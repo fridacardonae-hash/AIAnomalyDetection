@@ -1,0 +1,40 @@
+{
+    "Components":"WConn",
+    "Image_correlation1": "P16_0.jpg",
+    "Image_correlation2": "P5_0.jpg",
+    "Image_correlation3": "P14_0.jpg",
+    "ROIs":{
+        "Nombre": "WConn",
+        "x1": 51,
+        "y1": 80,
+        "x2": 183,
+        "y2": 175
+    },
+    "Modelbinpath": "C:/Users/pega_user/Desktop/aoi-inspector/frontend/weights",
+    "Folder_path": "D:\\AOIMachineLog\\Image\\2026",
+    "enviados_log": "units_processed.txt",
+    "scorelimit": 56,
+    "log_path": "\\\\10.232.4.39\\pmxbushare\\PMX-BU8-ENG\\17. Set-up Team\\Frida\\Nueva carpeta\\LOGS",
+    "model v3": "b_mean < 210, r_mean > 150, g_mean > 230",
+    "PLC_IP": "192.168.3.250",
+    "PLC_PORT": 502
+}
+
+#######ESTO ES PRUEBA BORRAR###
+{
+    "Components":"Screw1, 2, 3",
+    "Image_correlation1": "P23_0.tif",
+    "Image_correlation2": "P24_0.tif",
+    "Image_correlation3": "P23_0.jpeg",
+    "Image_correlation4": "P24_0.jpeg",
+    "Modelbinpath": "C:/Users/pega_user/Desktop/aoi-inspector/frontend/weights",
+    "Folder_path": "C:\\Users\\pega_user\\Desktop\\Screws_test",
+    "enviados_log": "units_processed.txt",
+    "scorelimit1": "70",
+    "scorelimit2": "63",
+    "scorelimit3": "57",
+    "log_path": "C:\\Users\\pega_user\\Desktop\\logs",
+    "model v3": "b_mean < 210, r_mean > 150, g_mean > 230",
+    "PLC_IP": "192.168.3.250",
+    "PLC_PORT": 502
+}
