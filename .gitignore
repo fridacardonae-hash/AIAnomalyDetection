@@ -1,0 +1,15 @@
+venv/
+
+__pycache__/
+*.pyc
+
+data/
+embeddings/
+
+.DS_Store
+Thumbs.db
+
+models/
+openvino_cache/
+weights/
+paquetes_offline/
