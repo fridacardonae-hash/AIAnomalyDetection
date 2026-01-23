@@ -14,9 +14,9 @@ from tkinter import filedialog
 from datetime import datetime
 import csv
 import threading
-from autoInspect import AutoInspector
-from autoInspect2 import AutoInspector2
-from autoInspect3 import AutoInspector3
+from backend.autoInspect import AutoInspector
+from backend.autoInspect2 import AutoInspector2
+from backend.autoInspect3 import AutoInspector3
 import time
 from watchdog.observers import Observer
 from watchdog_handleroriginal import AOIWatchdogHandler
