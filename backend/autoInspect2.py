@@ -16,17 +16,17 @@ import threading
 
 
 class AutoInspector:
-    def __init__(self, openvino_model_path1, file_config, is_scanning, img_format):
+    def __init__(self, openvino_model_path2, file_config, is_scanning, img_format):
         super().__init__()
-        self.openvino_model_path1 = openvino_model_path1
+        self.openvino_model_path2 = openvino_model_path2
         self.file_config = file_config
         self.img_format = img_format
         #self.processed_log = self.file_config["enviados_log"]
-        self.score_limit1 = float(self.file_config["scorelimit1"])
+        self.score_limit2 = float(self.file_config["scorelimit2"])
         self.is_scanning_online = is_scanning
 
 
-    def analyzePic1(self, image_paths):
+    def analyzePic2(self, image_paths):
             #isn = image_paths.split("\\")
             #ISNn = isn[-1:]
             #isnFinal = ISNn[0]
@@ -44,23 +44,23 @@ class AutoInspector:
                 
             
             #x1,y1,x2,y2
-            box = (1085, 1200, 3894, 2433)
-            print("snipping Wconn")
+            box = (2175, 1087, 3647, 2495)
+            print("snipping Coolant1")
             image_snip = image.crop(box)
             #im_res = image_snip.resize((256, 256))
 
             #hacer inferencia
             inferencer = OpenVINOInferencer(
-                path=self.openvino_model_path1,
+                path=self.openvino_model_path2,
                 device="CPU",
             )
             #obtener predicciones
             predictions= inferencer.predict(image=image_snip)
             #print("predictions", predictions)
             scoreArr = predictions.pred_score[0]
-            self.score1 = f"{(scoreArr[0]*100):.2f}"
-            scorefloa = float(self.score1)
-            print("prediction WConn ", self.score1)
+            self.score2 = f"{(scoreArr[0]*100):.2f}"
+            scorefloa = float(self.score2)
+            print("prediction Coolant 1 ", self.score2)
 
             #Guardar solo imagen de anomalia
             vizualizer2 = ImageVisualizer(
@@ -70,24 +70,24 @@ class AutoInspector:
 
             )
             output_anomalyimg = vizualizer2.visualize(predictions)
-            output_anomalyimg.save("output_anomaly1.png")
+            output_anomalyimg.save("output_anomaly2.png")
 
             #Visualizar todas los modos de la inferencia 
             visualizer = ImageVisualizer(text_config={"size":16})
-            self.output_image1 = visualizer.visualize(predictions)
-            self.output_image1.save("output1.png")
+            self.output_image2 = visualizer.visualize(predictions)
+            self.output_image2.save("output2.png")
 
             #Recorte con OpenCV [y1:y2, x1:x2]
-            imroi = cv2.imread("output_anomaly1.png")
-            self.roii1 = cv2.cvtColor(imroi, cv2.COLOR_BGR2RGB)
+            imroi = cv2.imread("output_anomaly2.png")
+            self.roii2 = cv2.cvtColor(imroi, cv2.COLOR_BGR2RGB)
 
-            if scorefloa > self.score_limit1:
-                self.result1 = "NG"
+            if scorefloa > self.score_limit2:
+                self.result2 = "NG"
             else:
-                self.result1 = "OK"
+                self.result2 = "OK"
         except Exception as e:
-            print("error haciendo inferencia en WConn", e)
+            print("error haciendo inferencia en Coolant1", e)
             return None, None, "ERROR"
             
-        return  self.output_image1, self.roii1, self.score1, self.result1
+        return  self.output_image2, self.roii2, self.score2, self.result2
 
