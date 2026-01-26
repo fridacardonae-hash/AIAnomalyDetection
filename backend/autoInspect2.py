@@ -15,7 +15,7 @@ import csv
 import threading
 
 
-class AutoInspector:
+class AutoInspector2:
     def __init__(self, openvino_model_path2, file_config, is_scanning, img_format):
         super().__init__()
         self.openvino_model_path2 = openvino_model_path2

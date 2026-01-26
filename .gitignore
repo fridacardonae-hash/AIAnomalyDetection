@@ -13,3 +13,5 @@ models/
 openvino_cache/
 weights/
 paquetes_offline/
+
+training/
