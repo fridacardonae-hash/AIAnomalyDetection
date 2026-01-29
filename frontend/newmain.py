@@ -602,7 +602,7 @@ class AnomalibDetection(ctk.CTk):
                     else:
                         self.overall_res = "OK"
                         self.save_log()
-                        self.save_log_online ()
+                        #self.save_log_online ()
                 
                 
 
