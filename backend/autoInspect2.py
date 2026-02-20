@@ -47,7 +47,7 @@ class AutoInspector2:
             box = (2175, 1087, 3647, 2495)
             print("snipping Coolant1")
             image_snip = image.crop(box)
-            #im_res = image_snip.resize((256, 256))
+            im_res = image_snip.resize((256, 256))
 
             #hacer inferencia
             inferencer = OpenVINOInferencer(
@@ -55,7 +55,7 @@ class AutoInspector2:
                 device="CPU",
             )
             #obtener predicciones
-            predictions= inferencer.predict(image=image_snip)
+            predictions= inferencer.predict(image=im_res)
             #print("predictions", predictions)
             scoreArr = predictions.pred_score[0]
             self.score2 = f"{(scoreArr[0]*100):.2f}"

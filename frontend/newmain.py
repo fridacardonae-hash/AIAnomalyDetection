@@ -348,7 +348,7 @@ class AnomalibDetection(ctk.CTk):
         self.canvas_width9 =int(self.screen_width*0.34)
         self.canvas_height9 = int(self.screen_height*0.22)
         self.canvas9= ctk.CTkCanvas(canvas3_panel, width=self.canvas_width9, height=self.canvas_height9, bg=self.theme["card"])
-        self.canvas9.grid(row=1, column=0, sticky="s", padx=10, pady=(0,10))
+        self.canvas9.grid(row=1, column=0, sticky="s", padx=10, pady=(0,10)) 
 
         score_label6 = ctk.CTkLabel(panel_score4, text="Anomaly Score:", font=ctk.CTkFont(size=16),text_color=self.theme["text_primary"])
         score_label6.grid(row=0, column=0, columnspan=2, pady=10, padx=5, sticky="nw")
@@ -403,11 +403,11 @@ class AnomalibDetection(ctk.CTk):
         
         self.model2_ch = ctk.CTkCheckBox(tab_config, onvalue=1, offvalue=0, text="Coolant1")
         self.model2_ch.grid(row=2, column=0, padx=10, pady=10)
-        #self.model2_ch.select()
+        self.model2_ch.select()
         
         self.model3_ch = ctk.CTkCheckBox(tab_config, onvalue=1, offvalue=0, text="Coolant2")
         self.model3_ch.grid(row=3, column=0, padx=10, pady=10)
-        #self.model3_ch.select()
+        self.model3_ch.select()
 
         self.open_config()
         
@@ -676,6 +676,7 @@ class AnomalibDetection(ctk.CTk):
                     self.button_res4.configure(text="NG", fg_color = "red")
                 else:
                     self.button_res4.configure(text="OK", fg_color = "green")
+
                     
 
     def pop_message(self):
