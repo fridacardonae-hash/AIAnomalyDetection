@@ -20,6 +20,7 @@ from backend.autoInspect3 import AutoInspector3
 import time
 from watchdog.observers import Observer
 from backend.watchdog_handleroriginal import AOIWatchdogHandler
+import shutil
 
 
 import sys
@@ -502,34 +503,67 @@ class AnomalibDetection(ctk.CTk):
         observer.stop()
         observer.join()
 #reelplazo cam_folder por isn_folder 
-    def _try_process_isn(self, isn, isn_folder):
-        self.img_format = " "
-        corr1 = self.file_config["Image_correlation1"]
-        corr2 = self.file_config["Image_correlation2"]
-        corr3 = self.file_config["Image_correlation3"]
 
-        img1 = os.path.join(isn_folder, corr1)
-        img2 = os.path.join(isn_folder, corr2)
-        img3 = os.path.join(isn_folder, corr3)
+    def wait_for_file(self, path, timeout=5):
+        start_time = time.time()
+        while True:
+            try:
+                with open(path, 'rb'):
+                    return True
+            except PermissionError:
+                if time.time() - start_time>timeout:
+                    return False
+                time.sleep(0.2)
+                
+    def _try_process_isn(self, isn, cam_folder):
+        try: 
+            self.img_format = " "
+            corr1 = self.file_config["Image_correlation1"]
+            corr2 = self.file_config["Image_correlation2"]
+            corr3 = self.file_config["Image_correlation3"]
 
-        if not os.path.exists(img1) or not os.path.exists(img2) or not os.path.exists(img3):
-            corr4 = self.file_config["Image_correlation4"]
-            corr5 = self.file_config["Image_correlation5"]
-            corr6 = self.file_config["Image_correlation6"]
+            img1 = os.path.join(cam_folder, corr1)
+            img2 = os.path.join(cam_folder, corr2)
+            img3 = os.path.join(cam_folder, corr3)
+            self.img_format = "JPG"
 
-            img1 = os.path.join(isn_folder, corr4)
-            img2 = os.path.join(isn_folder, corr5)
-            img3 = os.path.join(isn_folder, corr6)
-            self.img_format = "JPEG"
+            '''if not os.path.exists(img1) or not os.path.exists(img2) or not os.path.exists(img3):
+                corr4 = self.file_config["Image_correlation4"]
+                corr5 = self.file_config["Image_correlation5"]
+                corr6 = self.file_config["Image_correlation6"]
 
-            if not os.path.exists(img1) or not os.path.exists(img2) or not os.path.exists(img3):
+                img1 = os.path.join(cam_folder, corr4)
+                img2 = os.path.join(cam_folder, corr5)
+                img3 = os.path.join(cam_folder, corr6)
+                self.img_format = "JPEG"'''
+                
+                #save pictures temporary
+                
+            temp = Path.cwd()/"tempor"
+            temp.mkdir(exist_ok=True)
+            destinos = []
+            for img, name in [(img1, "img1.jpg"), (img2, "img2.jpg"), (img3, "img3.jpg")]:
+                if not self.wait_for_file(img):
+                    print((f"{img} bloqueada"))
+                    return
+                destino = os.path.join(temp, name)
+                shutil.copy(img, destino)
+                destinos.append(destino)
+                
+
+            '''if not os.path.exists(img1) or not os.path.exists(img2) or not os.path.exists(img3):
                 return  
-        time.sleep(1)
-        print(f"Todas las imágenes listas para ISN {isn}")
-        print("el formato de la imagen es", self.img_format)
-        self.processed_folders.add(isn)
-        self._process_isn(isn, img1, img2, img3)
-        #self.after(5, lambda:self._post_process())
+            if not os.path.exists(destino):
+                return'''  
+            time.sleep(1)
+            print(f"Todas las imágenes listas para ISN {isn}")
+            print("el formato de la imagen es", self.img_format)
+            
+            self.processed_folders.add(isn)
+            self._process_isn(isn, *destinos)
+            #self.after(5, lambda:self._post_process())
+        except Exception as e:
+            print("No se pudo procesar la imagen", e)
     
 
     def _process_isn(self, isn, img1, img2, img3):
@@ -668,7 +702,7 @@ class AnomalibDetection(ctk.CTk):
             if self.result1 == "NG" or self.result2 == "NG" or self.result3 == "NG":
                 self.button_res4.configure(text="NG", fg_color = "red")
             else:
-                self.button_res4.configure(text="OK", fg_color = "green")
+                self.button_res4.configure(text="OK", fg_color ="green")
                 
         else:
             if self.model2_ch.get()==0 and self.model3_ch.get()==0:

@@ -14,7 +14,7 @@ class AOIWatchdogHandler(FileSystemEventHandler):
             return
 
         file_path = event.src_path
-        print("file_path", file_path)
+        #print("file_path", file_path)
         file_name = os.path.basename(file_path)
 
 
@@ -24,11 +24,11 @@ class AOIWatchdogHandler(FileSystemEventHandler):
         
 
         if file_name not in (corr1, corr2, corr3):
-            corr4 = self.inspector.file_config["Image_correlation4"]
+            '''corr4 = self.inspector.file_config["Image_correlation4"]
             corr5 = self.inspector.file_config["Image_correlation5"]
             corr6 = self.inspector.file_config["Image_correlation6"]
-            if file_name not in (corr4, corr5, corr6):
-                return
+            if file_name not in (corr4, corr5, corr6):'''
+            return
 
         cam_folder = os.path.dirname(file_path)
         if os.path.basename(cam_folder) != "Cam1":
@@ -44,5 +44,6 @@ class AOIWatchdogHandler(FileSystemEventHandler):
             return
 
         print(f"Imagen detectada: {file_name} para ISN {isn}")
-
+        print(cam_folder)
         self.inspector._try_process_isn(isn, cam_folder)
+
