@@ -47,7 +47,7 @@ class AutoInspector:
             box = (1085, 1200, 3894, 2433)
             print("snipping Wconn")
             image_snip = image.crop(box)
-            #im_res = image_snip.resize((256, 256))
+            im_res = image_snip.resize((256, 256))
 
             #hacer inferencia
             inferencer = OpenVINOInferencer(
@@ -55,7 +55,7 @@ class AutoInspector:
                 device="CPU",
             )
             #obtener predicciones
-            predictions= inferencer.predict(image=image_snip)
+            predictions= inferencer.predict(image=im_res)
             #print("predictions", predictions)
             scoreArr = predictions.pred_score[0]
             self.score1 = f"{(scoreArr[0]*100):.2f}"

@@ -506,14 +506,17 @@ class AnomalibDetection(ctk.CTk):
 
     def wait_for_file(self, path, timeout=5):
         start_time = time.time()
+        last_size = -1
         while True:
-            try:
-                with open(path, 'rb'):
+            if os.path.exists(path):
+                size = os.path.getsize(path)
+                if size == last_size and size > 0:
                     return True
-            except PermissionError:
-                if time.time() - start_time>timeout:
-                    return False
-                time.sleep(0.2)
+                last_size = size
+            if time.time() - start_time > timeout:
+                return False
+            
+            time.sleep(0.2)
                 
     def _try_process_isn(self, isn, cam_folder):
         try: 
@@ -549,6 +552,9 @@ class AnomalibDetection(ctk.CTk):
                 destino = os.path.join(temp, name)
                 shutil.copy(img, destino)
                 destinos.append(destino)
+                if os.path.getsize(destino) ==0:
+                    print("Imagen copiada esta vacia")
+                    return
                 
 
             '''if not os.path.exists(img1) or not os.path.exists(img2) or not os.path.exists(img3):
