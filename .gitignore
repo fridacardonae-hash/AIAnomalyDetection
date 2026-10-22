@@ -15,3 +15,5 @@ weights/
 paquetes_offline/
 
 training/
+
+*.csv

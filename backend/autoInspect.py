@@ -46,7 +46,7 @@ class AutoInspector:
             #x1,y1,x2,y2
             box = (1085, 1200, 3894, 2433)
             print("snipping Wconn")
-            image_snip = image.crop(box)
+            image_snip = image.crop(box) #regresar
             im_res = image_snip.resize((256, 256))
 
             #hacer inferencia

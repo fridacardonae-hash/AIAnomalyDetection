@@ -423,9 +423,12 @@ class AnomalibDetection(ctk.CTk):
 
         #Cargar modelos OpenVINO
         weights_path = Path.cwd()/"weights"
-        self.openvino_model_path1 = weights_path/"WConn"/"openvino" /"model1.bin"
-        self.openvino_model_path2 = weights_path/"Cool1"/"openvino" /"model2.bin"
-        self.openvino_model_path3 = weights_path/"Cool2"/"openvino" /"model3.bin"
+        #self.openvino_model_path1 = weights_path/"WConn"/"openvino" /"model1.bin"
+        self.openvino_model_path1 = weights_path/"WConn"/"openvino" /"model1_q.bin"
+        #self.openvino_model_path2 = weights_path/"Cool1"/"openvino" /"model2.bin"
+        self.openvino_model_path2 = weights_path/"Cool1"/"openvino" /"model2_q.bin"
+        #self.openvino_model_path3 = weights_path/"Cool2"/"openvino" /"model3.bin"
+        self.openvino_model_path3 = weights_path/"Cool2"/"openvino" /"model3_q.bin"
 
         self.processed_log = self.file_config["enviados_log"]
         if os.path.exists(self.processed_log):
